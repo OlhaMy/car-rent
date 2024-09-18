@@ -9,7 +9,6 @@ const initialState = {
   isError: false,
 };
 
-// Створення slice для автомобілів
 export const carsSlice = createSlice({
   name: "cars",
   initialState,
@@ -37,12 +36,10 @@ export const carsSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchCarsThunk.fulfilled, (state, action) => {
-        console.log("Fetched cars:", action.payload); // Додайте цей лог
         state.items = action.payload;
         state.filterItems = action.payload;
       })
       .addCase(fetchMoreCarsThunk.fulfilled, (state, action) => {
-        console.log("Fetched more cars:", action.payload); // Додайте цей лог
         state.items.push(...action.payload);
         state.filterItems.push(...action.payload);
       })
