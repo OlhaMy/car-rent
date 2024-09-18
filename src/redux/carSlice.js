@@ -1,54 +1,73 @@
-import { createSlice } from "@reduxjs/toolkit";
-import {
-  fetchMakes,
-  fetchPrice,
-  fetchCatalog,
-} from "../services/apiMockapi.js";
+import { createSlice, isAnyOf } from "@reduxjs/toolkit";
+import { fetchCarsThunk, fetchMoreCarsThunk } from "./operations";
 
 const initialState = {
-  cars: [],
-  favorites: [],
-  makes: [],
-  prices: [],
-  status: "idle",
-  error: null,
+  items: [],
+  favoriteItems: [],
+  filterItems: [],
+  isLoading: false,
+  isError: false,
 };
 
-const carSlice = createSlice({
-  name: "car",
+// Створення slice для автомобілів
+export const carsSlice = createSlice({
+  name: "cars",
   initialState,
   reducers: {
     toggleFavorite: (state, action) => {
-      const car = state.cars.find((car) => car.id === action.payload);
-      if (car) {
-        car.isFavorite = !car.isFavorite;
-        if (car.isFavorite) {
-          state.favorites.push(car);
-        } else {
-          state.favorites = state.favorites.filter((fav) => fav.id !== car.id);
-        }
+      const carId = action.payload;
+      const index = state.favoriteItems.indexOf(carId);
+      if (index > -1) {
+        state.favoriteItems.splice(index, 1);
+      } else {
+        state.favoriteItems.push(carId);
+      }
+    },
+    filterCars: (state, action) => {
+      const { brand } = action.payload;
+      if (brand) {
+        state.filterItems = state.items.filter(
+          (car) => car.make.toLowerCase() === brand.toLowerCase()
+        );
+      } else {
+        state.filterItems = state.items;
       }
     },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchMakes.fulfilled, (state, action) => {
-        state.makes = action.payload;
+      .addCase(fetchCarsThunk.fulfilled, (state, action) => {
+        console.log("Fetched cars:", action.payload); // Додайте цей лог
+        state.items = action.payload;
+        state.filterItems = action.payload;
       })
-      .addCase(fetchPrice.fulfilled, (state, action) => {
-        state.prices = action.payload;
-      })
-      .addCase(fetchCatalog.fulfilled, (state, action) => {
-        state.cars = action.payload;
+      .addCase(fetchMoreCarsThunk.fulfilled, (state, action) => {
+        console.log("Fetched more cars:", action.payload); // Додайте цей лог
+        state.items.push(...action.payload);
+        state.filterItems.push(...action.payload);
       })
       .addMatcher(
-        (action) => action.type.endsWith("/rejected"),
+        isAnyOf(fetchCarsThunk.pending, fetchMoreCarsThunk.pending),
+        (state) => {
+          state.isLoading = true;
+        }
+      )
+      .addMatcher(
+        isAnyOf(fetchCarsThunk.fulfilled, fetchMoreCarsThunk.fulfilled),
+        (state) => {
+          state.isError = false;
+          state.isLoading = false;
+        }
+      )
+      .addMatcher(
+        isAnyOf(fetchCarsThunk.rejected, fetchMoreCarsThunk.rejected),
         (state, action) => {
-          state.error = action.payload;
+          state.isError = action.payload;
+          state.isLoading = false;
         }
       );
   },
 });
 
-export const { toggleFavorite } = carSlice.actions;
-export default carSlice.reducer;
+export const { toggleFavorite, filterCars } = carsSlice.actions;
+export default carsSlice.reducer;

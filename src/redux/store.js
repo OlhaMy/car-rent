@@ -10,18 +10,23 @@ import {
   REGISTER,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import rootReducer from "./reduser";
+import carsReducer from "./carSlice"; // Підключаємо безпосередньо carsReducer
 
+// Налаштування персистентного ред'юсера
 const persistConfig = {
-  key: "car",
+  key: "cars", // Ім'я ключа для персистенції
   version: 1,
-  storage,
+  storage, // Використання localStorage для збереження стану
 };
 
-const persistedReducer = persistReducer(persistConfig, rootReducer);
+// Створення персистентного ред'юсера
+const persistedReducer = persistReducer(persistConfig, carsReducer);
 
+// Створення стору з персистенцією
 export const store = configureStore({
-  reducer: persistedReducer,
+  reducer: {
+    cars: persistedReducer, // Задаємо правильний ключ для ред'юсера
+  },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {

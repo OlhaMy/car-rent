@@ -1,61 +1,92 @@
-// Catalog.jsx
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  fetchCatalog,
-  fetchMakes,
-  fetchPrice,
-} from "../../services/apiMockapi";
-import { selectCars, selectMakes, selectPrices } from "../../redux/selectors";
+import { fetchCarsThunk } from "../../redux/operations";
+import { selectCars } from "../../redux/selectors";
 import Filters from "../Filters/Filters";
 import CarList from "../CarList/CarList";
 import LoadMore from "../LoadMore/LoadMore";
 import DateRangePicker from "../DateRangePicker/DateRangePicker";
+import { makes } from "../../helpers/makes"; // Імпорт марок автомобілів
+import { prices } from "../../helpers/prices"; // Імпорт списку цін
 
 const Catalog = () => {
   const dispatch = useDispatch();
   const cars = useSelector(selectCars);
-  const makes = useSelector(selectMakes);
-  const prices = useSelector(selectPrices);
-  const [visibleCount, setVisibleCount] = useState(12);
-  const [selectedMakes, setSelectedMakes] = useState("");
-  const [selectedPrice, setSelectedPrice] = useState("");
 
-  const unavailableDates = ["2024-09-20", "2024-09-21", "2024-09-25"];
+  // Лог для перевірки отриманих машин з Redux store
+  console.log("Fetched cars from store:", cars);
 
+  const [visibleCount, setVisibleCount] = useState(12); // Кількість видимих елементів
+  const [filteredCars, setFilteredCars] = useState([]); // Додаємо стан для відфільтрованих машин
+  const [selectedMakes, setSelectedMakes] = useState(""); // Вибрана марка
+  const [selectedPrice, setSelectedPrice] = useState(""); // Вибрана ціна
+
+  const unavailableDates = ["2024-09-20", "2024-09-21", "2024-09-25"]; // Приклад недоступних дат
+
+  // Завантаження автомобілів при першому рендері
   useEffect(() => {
-    dispatch(fetchCatalog());
-    dispatch(fetchMakes());
-    dispatch(fetchPrice());
+    dispatch(fetchCarsThunk());
   }, [dispatch]);
 
-  const handleLoadMore = () => {
-    setVisibleCount((prevCount) => prevCount + 12);
+  // Ініціалізуємо filteredCars усіма машинами при першому рендері або при завантаженні машин
+  useEffect(() => {
+    if (cars && cars.length > 0) {
+      console.log("Cars from store (filtered):", cars);
+      setFilteredCars(cars);
+    }
+  }, [cars]);
+
+  // Фільтрація автомобілів за маркою і ціною
+  const applyFilters = () => {
+    const filtered = cars.filter((car) => {
+      const matchesMake = selectedMakes ? car.make === selectedMakes : true;
+      const matchesPrice = selectedPrice
+        ? parseInt(car.rentalPrice.replace("$", "")) <= selectedPrice
+        : true;
+      return matchesMake && matchesPrice;
+    });
+    setFilteredCars(filtered); // Оновлюємо стан filteredCars після фільтрації
   };
 
-  const visibleCars = cars.slice(0, visibleCount);
+  // Видимі автомобілі (обмеження на кількість, яке збільшується по кліку на "Load More")
+  const visibleCars = filteredCars.slice(0, visibleCount);
+
+  const handleLoadMore = () => {
+    setVisibleCount((prevCount) => prevCount + 12); // Завантажити ще 12 автомобілів
+  };
 
   return (
     <>
+      {/* Фільтри для марок і цін */}
       <Filters
         selectedMakes={selectedMakes}
         setSelectedMakes={setSelectedMakes}
         selectedPrice={selectedPrice}
         setSelectedPrice={setSelectedPrice}
-        makes={makes}
-        prices={prices}
+        makes={makes} // Підставляємо дані з makes.js
+        prices={prices} // Підставляємо дані з prices.js
       />
 
       <h2>Сar mileage/km</h2>
       <DateRangePicker unavailableDates={unavailableDates} />
-      <button type="submit">Search</button>
+      <button type="submit" onClick={applyFilters}>
+        Search
+      </button>
 
-      <CarList cars={visibleCars} />
+      {/* Список автомобілів */}
+      {visibleCars.length > 0 ? (
+        <CarList cars={visibleCars} />
+      ) : (
+        <p>No cars available</p>
+      )}
 
-      <LoadMore
-        handleLoadMore={handleLoadMore}
-        isVisible={visibleCount < cars.length}
-      />
+      {/* Кнопка для завантаження більше автомобілів */}
+      {filteredCars.length > visibleCount && (
+        <LoadMore
+          handleLoadMore={handleLoadMore}
+          isVisible={visibleCount < filteredCars.length} // Кнопка відображається тільки, якщо є ще автомобілі
+        />
+      )}
     </>
   );
 };

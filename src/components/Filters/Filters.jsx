@@ -1,5 +1,6 @@
-// Filters.jsx
 import React from "react";
+import { makes } from "../../helpers/makes";
+import { prices } from "../../helpers/prices";
 
 const Filters = ({
   selectedMakes,
@@ -18,8 +19,8 @@ const Filters = ({
           onChange={(e) => setSelectedMakes(e.target.value)}
         >
           <option>Всі</option>
-          {makes.map((make) => (
-            <option key={make} value={make}>
+          {makes.map((make, index) => (
+            <option key={`${make}-${index}`} value={make}>
               {make}
             </option>
           ))}
