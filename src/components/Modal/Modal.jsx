@@ -26,35 +26,57 @@ const Modal = ({ car, isOpen, onClose }) => {
         <button className={s.modalClose} onClick={onClose}>
           &times;
         </button>
-        <h2>
-          {car.make} {car.model}
-        </h2>
+
         <img src={car.img} alt={car.model} className={s.modalImg} />
-        <p>{car.description}</p>
-        <ul>
+
+        <ul className={s.list}>
           <li>
-            <p>Year:</p> {car.year}
+            <h2 className={s.title}>
+              {car.make} <span className={s.spanTitle}>{car.type}</span>,{" "}
+              {car.year}
+            </h2>
           </li>
-          <li>
-            <p>Fuel Consumption:</p> {car.fuelConsumption}
+
+          <li className={s.titleDescription}>
+            <p>{car.address}</p>
+            <p>Id: {car.id}</p>
+            <p>Year: {car.year}</p>
+            <p>Type: {car.type}</p>
+            <p>Fuel consumption: {car.fuelConsumption}</p>
+            <p>Engine size: {car.engineSize}</p>
           </li>
-          <li>
-            <p>Engine Size:</p> {car.engineSize}
+
+          <li className={s.description}>{car.description}</li>
+
+          <li className={s.accessories}>
+            <p>Accessories and functionalities: </p>
+            {car.accessories.join(" | ")}
+            {car.functionalities.join(" | ")}
           </li>
-          <li>
-            <p>Rental Price:</p> {car.rentalPrice}
+
+          <li className={s.conditions}>
+            <p>Rental Conditions: </p>
+            <div className={s.conditionItem}>
+              Minimum age: {car.rentalConditions.age}
+            </div>
+            <div className={s.conditionItem}>Valid driver's license</div>
+            <div className={s.conditionItem}>Security deposit required</div>
+            <div className={`${s.conditionItem} ${s.highlight}`}>
+              Mileage: {car.mileage}
+            </div>
+            <div className={`${s.conditionItem} ${s.highlight}`}>
+              Price: {car.rentalPrice}
+            </div>
           </li>
+
           <li>
-            <p>Rental Company:</p> {car.rentalCompany}
-          </li>
-          <li>
-            <p>Address:</p> {car.address}
-          </li>
-          <li>
-            <p>Mileage:</p> {car.mileage} км
-          </li>
-          <li>
-            <p>Rental Conditions:</p> {car.rentalConditions}
+            <a
+              href="tel:+380730000000"
+              className={s.rentalCarButton}
+              target="blank"
+            >
+              Rental car
+            </a>
           </li>
         </ul>
       </div>
