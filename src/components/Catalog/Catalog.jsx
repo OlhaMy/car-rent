@@ -47,6 +47,8 @@ const Catalog = () => {
     setVisibleCount((prevCount) => prevCount + 12); //
   };
 
+  const isLoadMoreVisible = visibleCount < filteredCars.length;
+
   return (
     <>
       <Filters
@@ -73,7 +75,7 @@ const Catalog = () => {
       {filteredCars.length > visibleCount && (
         <LoadMore
           handleLoadMore={handleLoadMore}
-          isVisible={visibleCount < filteredCars.length} // Ось ця умова повинна бути правильною
+          isVisible={isLoadMoreVisible}
         />
       )}
     </>
