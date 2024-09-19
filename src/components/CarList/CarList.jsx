@@ -30,12 +30,6 @@ const CarList = ({ cars }) => {
 
   return (
     <>
-      <div className={s.nav}>
-        <Link to="/favorites" className={s.favoritesLink}>
-          Go to favorites car
-        </Link>
-      </div>
-
       <ul className={s.list}>
         {cars.map((car) => (
           <CarItem

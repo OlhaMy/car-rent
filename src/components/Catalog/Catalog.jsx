@@ -5,7 +5,6 @@ import { selectCars } from "../../redux/selectors";
 import Filters from "../Filters/Filters";
 import CarList from "../CarList/CarList";
 import LoadMore from "../LoadMore/LoadMore";
-import DateRangePicker from "../DateRangePicker/DateRangePicker";
 import { makes } from "../../helpers/makes";
 import { prices } from "../../helpers/prices";
 
@@ -18,8 +17,6 @@ const Catalog = () => {
   const [selectedMakes, setSelectedMakes] = useState("");
   const [selectedPrice, setSelectedPrice] = useState("");
 
-  const unavailableDates = ["2024-09-20", "2024-09-21", "2024-09-25"];
-
   useEffect(() => {
     dispatch(fetchCarsThunk());
   }, [dispatch]);
@@ -30,13 +27,19 @@ const Catalog = () => {
     }
   }, [cars]);
 
-  const applyFilters = () => {
+  const applyFilters = (minMileage, maxMileage) => {
     const filtered = cars.filter((car) => {
       const matchesMake = selectedMakes ? car.make === selectedMakes : true;
       const matchesPrice = selectedPrice
         ? parseInt(car.rentalPrice.replace("$", "")) <= selectedPrice
         : true;
-      return matchesMake && matchesPrice;
+
+      // Перевіряємо пробіг
+      const matchesMileage =
+        (!minMileage || car.mileage >= minMileage) &&
+        (!maxMileage || car.mileage <= maxMileage);
+
+      return matchesMake && matchesPrice && matchesMileage;
     });
     setFilteredCars(filtered);
   };
@@ -44,7 +47,7 @@ const Catalog = () => {
   const visibleCars = filteredCars.slice(0, visibleCount);
 
   const handleLoadMore = () => {
-    setVisibleCount((prevCount) => prevCount + 12); //
+    setVisibleCount((prevCount) => prevCount + 12);
   };
 
   const isLoadMoreVisible = visibleCount < filteredCars.length;
@@ -56,15 +59,8 @@ const Catalog = () => {
         setSelectedMakes={setSelectedMakes}
         selectedPrice={selectedPrice}
         setSelectedPrice={setSelectedPrice}
-        makes={makes}
-        prices={prices}
+        applyFilters={applyFilters} // Передаємо фільтрацію пробігу
       />
-
-      <h2>Сar mileage/km</h2>
-      <DateRangePicker unavailableDates={unavailableDates} />
-      <button type="submit" onClick={applyFilters}>
-        Search
-      </button>
 
       {visibleCars.length > 0 ? (
         <CarList cars={visibleCars} />

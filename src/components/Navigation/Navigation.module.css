@@ -9,6 +9,12 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  position: fixed; /* Зафіксувати хедер */
+  top: 0; /* Фіксувати у верхній частині */
+  left: 0;
+  right: 0;
+  z-index: 1000;
 }
 .menu {
   display: flex;

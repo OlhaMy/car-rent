@@ -28,14 +28,16 @@ const CarItem = ({ car, toggleFavorite, isFavorite, openModal }) => {
         <span className={s.spanPrice}> {car.rentalPrice}</span>
       </h3>
       <div className={s.description}>
-        <p>{car.address}</p>
-        <p>{car.mileage}км</p>
+        <p>{car.address.toString().split(",").slice(1, 3).join(" | ")}</p>
+
+        <p>{car.rentalCompany.toString().split(" ").slice(0, 1).join(" ")}</p>
+        <p>{car.accessories.toString().split(" ").slice(0, 2).join(" ")}</p>
         <p>{car.model}</p>
-        <p>{car.rentalCompany}</p>
-        <p>{car.type}</p>
         <p>{car.makes}</p>
         <p>{car.mileage}</p>
-        <p>{car.accessories}</p>
+        <p>
+          {car.functionalities?.toString().split(" ").slice(0, 2).join(" ")}
+        </p>
       </div>
 
       <button className={s.learnMoreBtn} onClick={() => openModal(car)}>
