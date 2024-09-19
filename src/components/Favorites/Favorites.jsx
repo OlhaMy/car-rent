@@ -7,23 +7,20 @@ import Modal from "../Modal/Modal";
 
 const Favorites = () => {
   const [favorites, setFavorites] = useState([]);
-  const [selectedCar, setSelectedCar] = useState(null); // Для обраного автомобіля
-  const [isModalOpen, setIsModalOpen] = useState(false); // Для відкриття/закриття модального вікна
+  const [selectedCar, setSelectedCar] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
 
-  // Завантажуємо список улюблених з localStorage
   useEffect(() => {
     const savedFavorites = loadFavoritesFromLocalStorage();
     setFavorites(savedFavorites);
   }, []);
 
-  // Відкриваємо модальне вікно
   const openModal = (car) => {
     setSelectedCar(car);
     setIsModalOpen(true);
   };
 
-  // Закриваємо модальне вікно
   const closeModal = () => {
     setSelectedCar(null);
     setIsModalOpen(false);
@@ -32,7 +29,6 @@ const Favorites = () => {
   if (favorites.length === 0) {
     return (
       <div className={s.empty}>
-        <h2>You don´t have favorite cars</h2>
         <button onClick={() => navigate("/catalog")}>
           Go to advertisements
         </button>
@@ -47,13 +43,12 @@ const Favorites = () => {
           <CarItem
             key={car.id}
             car={car}
-            isFavorite={true} // На сторінці "Favorites" всі автомобілі є улюбленими
-            openModal={openModal} // Передаємо функцію для відкриття модального вікна
+            isFavorite={true}
+            openModal={openModal}
           />
         ))}
       </ul>
 
-      {/* Модальне вікно */}
       <Modal car={selectedCar} isOpen={isModalOpen} onClose={closeModal} />
     </>
   );

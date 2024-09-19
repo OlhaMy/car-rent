@@ -37,7 +37,7 @@ const CarItem = ({ car, toggleFavorite, isFavorite, openModal }) => {
         <p>{car.mileage}</p>
         <p>{car.accessories}</p>
       </div>
-      {/* Викликаємо передану через пропси функцію openModal */}
+
       <button className={s.learnMoreBtn} onClick={() => openModal(car)}>
         Learn more
       </button>
