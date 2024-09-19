@@ -1,26 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import s from "./CarList.module.css";
 import { Link } from "react-router-dom";
-import {
-  saveFavoritesToLocalStorage,
-  loadFavoritesFromLocalStorage,
-} from "../../helpers/localStorage";
 import CarItem from "../CarItem/CarItem";
 import Modal from "../Modal/Modal";
+import useLocalStorage from "../../helpers/localStorage";
 
 const CarList = ({ cars }) => {
-  const [favorites, setFavorites] = useState([]);
+  const [favorites, setFavorites] = useLocalStorage("favorites", []);
   const [selectedCar, setSelectedCar] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  useEffect(() => {
-    const savedFavorites = loadFavoritesFromLocalStorage();
-    setFavorites(savedFavorites);
-  }, []);
-
-  useEffect(() => {
-    saveFavoritesToLocalStorage(favorites);
-  }, [favorites]);
 
   const toggleFavorite = (car) => {
     if (favorites.some((fav) => fav.id === car.id)) {
