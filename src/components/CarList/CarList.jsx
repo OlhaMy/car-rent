@@ -1,33 +1,34 @@
 import { useState, useEffect } from "react";
-import Modal from "../Modal/Modal";
-import { Icons } from "../Icons/Icons";
-import clsx from "clsx";
 import s from "./CarList.module.css";
 import { Link } from "react-router-dom";
 import {
   saveFavoritesToLocalStorage,
   loadFavoritesFromLocalStorage,
 } from "../../helpers/localStorage";
+import CarItem from "../CarItem/CarItem";
+import Modal from "../Modal/Modal";
 
 const CarList = ({ cars }) => {
-  const [selectedCar, setSelectedCar] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [favorites, setFavorites] = useState([]);
+  const [selectedCar, setSelectedCar] = useState(null); // Обраний автомобіль для модального вікна
+  const [isModalOpen, setIsModalOpen] = useState(false); // Стан модального вікна
 
+  // Завантажуємо список улюблених з localStorage
   useEffect(() => {
     const savedFavorites = loadFavoritesFromLocalStorage();
     setFavorites(savedFavorites);
   }, []);
 
+  // Зберігаємо список улюблених у localStorage при кожній зміні
   useEffect(() => {
     saveFavoritesToLocalStorage(favorites);
   }, [favorites]);
 
-  const toggleFavorite = (carId) => {
-    if (favorites.includes(carId)) {
-      setFavorites(favorites.filter((id) => id !== carId));
+  const toggleFavorite = (car) => {
+    if (favorites.some((fav) => fav.id === car.id)) {
+      setFavorites(favorites.filter((fav) => fav.id !== car.id));
     } else {
-      setFavorites([...favorites, carId]);
+      setFavorites([...favorites, car]);
     }
   };
 
@@ -50,45 +51,18 @@ const CarList = ({ cars }) => {
       </div>
 
       <ul className={s.list}>
-        {cars.map((car, index) => (
-          <li key={car.id || index} className={s.item}>
-            <div className={s.imgWrapper}>
-              <button
-                className={clsx(s.heartBtn, {
-                  [s.heartBtnActive]: favorites.includes(car.id),
-                })}
-                onClick={() => toggleFavorite(car.id)}
-              >
-                <Icons
-                  name="heart"
-                  className={clsx(s.heartIcon, {
-                    [s.heartIconActive]: favorites.includes(car.id),
-                  })}
-                />
-              </button>
-              <img className={s.img} src={car.img} alt={car.model} />
-            </div>
-            <h3 className={s.title}>
-              <span className={s.spanMake}>
-                {car.make} {car.year}
-              </span>
-              <span className={s.spanPrice}> {car.rentalPrice}</span>
-            </h3>
-            <div className={s.description}>
-              <p>{car.address}</p>
-              <p>{car.mileage}км</p>
-              <p>{car.model}</p>
-              <p>{car.rentalCompany}</p>
-              <p>{car.type}</p>
-              <p>{car.makes}</p>
-              <p>{car.mileage}</p>
-              <p>{car.accessories}</p>
-            </div>
-            <button onClick={() => openModal(car)}>Learn more</button>
-          </li>
+        {cars.map((car) => (
+          <CarItem
+            key={car.id}
+            car={car}
+            toggleFavorite={toggleFavorite}
+            isFavorite={favorites.some((fav) => fav.id === car.id)}
+            openModal={openModal} // Передаємо функцію відкриття модального вікна
+          />
         ))}
       </ul>
 
+      {/* Модальне вікно, яке відкривається при кліку на "Learn more" */}
       <Modal car={selectedCar} isOpen={isModalOpen} onClose={closeModal} />
     </>
   );
