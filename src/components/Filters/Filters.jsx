@@ -13,6 +13,19 @@ const Filters = ({
   const [minMileage, setMinMileage] = useState("");
   const [maxMileage, setMaxMileage] = useState("");
 
+  const handleMileageChange = (setter) => (e) => {
+    const value = e.target.value;
+    setter(value >= 0 ? value : "");
+  };
+
+  const handleSubmit = () => {
+    applyFilters(minMileage, maxMileage);
+    setSelectedMakes("");
+    setSelectedPrice("");
+    setMinMileage("");
+    setMaxMileage("");
+  };
+
   return (
     <div className={s.wrapper}>
       <div className={s.makes}>
@@ -23,7 +36,7 @@ const Filters = ({
             onChange={(e) => setSelectedMakes(e.target.value)}
             className={s.select}
           >
-            <option>Всі</option>
+            <option value="">Enter the text</option>
             {makes.map((make, index) => (
               <option key={`${make}-${index}`} value={make}>
                 {make}
@@ -58,24 +71,23 @@ const Filters = ({
             type="number"
             placeholder="From"
             value={minMileage}
-            onChange={(e) => setMinMileage(e.target.value)}
-            className={s.input}
+            onChange={handleMileageChange(setMinMileage)}
+            className={s.inputFirst}
+            min="0"
           />
+          <div className={s.line}></div>
           <input
             type="number"
-            placeholder="to"
+            placeholder="To"
             value={maxMileage}
-            onChange={(e) => setMaxMileage(e.target.value)}
+            onChange={handleMileageChange(setMaxMileage)}
             className={s.input}
+            min="0"
           />
         </div>
       </div>
 
-      <button
-        className={s.btn}
-        type="button"
-        onClick={() => applyFilters(minMileage, maxMileage)}
-      >
+      <button className={s.btn} type="button" onClick={handleSubmit}>
         Search
       </button>
     </div>
