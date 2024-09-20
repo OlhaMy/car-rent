@@ -3,22 +3,22 @@
   flex-wrap: wrap;
   gap: 29px;
   justify-content: center;
-  padding: 0;
-  margin-top: 35px;
+  padding: 0 115px;
+  margin-top: 115px;
 }
 .empty {
-  height: 100vh;
+  width: 100%; /* Займає 50% ширини екрану */
+  height: 100vh; /* Займає 50% висоти екрану */
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
 
-  background-image: url("../Images/car.png");
+  background-image: url("../Images/Objekt.png");
   background-position: center;
   background-repeat: no-repeat;
-  background-size: cover;
-
-  text-align: center;
+  background-size: contain; /* Зображення масштабуватиметься, зберігаючи пропорції */
+  margin: auto; /* Центрування контейнера по горизонталі */
 }
 
 .empty button {

@@ -1,7 +1,11 @@
 .header {
   background-color: var(--header);
   color: var(--white);
-  padding: 26px 35px;
+  padding: 16px 115px;
+  -webkit-box-shadow: 0px 10px 13px -7px #000000,
+    -33px -8px 0px -30px rgba(0, 0, 0, 0.02);
+  box-shadow: 0px 10px 13px -7px #000000,
+    -33px -8px 0px -30px rgba(0, 0, 0, 0.02);
 
   font-size: 20px;
   font-weight: 800;
@@ -10,20 +14,29 @@
   align-items: center;
   justify-content: space-between;
 
-  position: fixed; /* Зафіксувати хедер */
-  top: 0; /* Фіксувати у верхній частині */
+  position: fixed;
+  top: 0;
   left: 0;
   right: 0;
   z-index: 1000;
 }
+
 .menu {
   display: flex;
-  gap: 15px;
+  gap: 35px;
+}
+.home {
+  display: flex;
+  align-items: flex-end;
 }
 
 .active {
-  color: #3f5efb;
-  text-decoration: underline;
+  color: #e0dfdc;
 
-  pointer-events: none;
+  letter-spacing: 0.1em;
+  text-shadow: 0 -1px 0 #fff, 0 1px 0 #2e2e2e, 0 2px 0 #2c2c2c, 0 3px 0 #2a2a2a,
+    0 4px 0 #282828, 0 5px 0 #262626, 0 6px 0 #242424, 0 7px 0 #222,
+    0 8px 0 #202020, 0 9px 0 #1e1e1e, 0 10px 0 #1c1c1c, 0 11px 0 #1a1a1a,
+    0 12px 0 #181818, 0 13px 0 #161616, 0 14px 0 #141414, 0 15px 0 #121212,
+    0 22px 30px rgba(0, 0, 0, 0.9);
 }

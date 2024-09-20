@@ -5,8 +5,8 @@ import { selectCars } from "../../redux/selectors";
 import Filters from "../Filters/Filters";
 import CarList from "../CarList/CarList";
 import LoadMore from "../LoadMore/LoadMore";
-import { makes } from "../../helpers/makes";
-import { prices } from "../../helpers/prices";
+import s from "./Catalog.module.css";
+import { PiSmileyMeltingLight } from "react-icons/pi";
 
 const Catalog = () => {
   const dispatch = useDispatch();
@@ -34,7 +34,6 @@ const Catalog = () => {
         ? parseInt(car.rentalPrice.replace("$", "")) <= selectedPrice
         : true;
 
-      // Перевіряємо пробіг
       const matchesMileage =
         (!minMileage || car.mileage >= minMileage) &&
         (!maxMileage || car.mileage <= maxMileage);
@@ -53,28 +52,35 @@ const Catalog = () => {
   const isLoadMoreVisible = visibleCount < filteredCars.length;
 
   return (
-    <>
+    <div className={s.wrapper}>
       <Filters
         selectedMakes={selectedMakes}
         setSelectedMakes={setSelectedMakes}
         selectedPrice={selectedPrice}
         setSelectedPrice={setSelectedPrice}
-        applyFilters={applyFilters} // Передаємо фільтрацію пробігу
+        applyFilters={applyFilters}
       />
 
       {visibleCars.length > 0 ? (
         <CarList cars={visibleCars} />
       ) : (
-        <p>No cars available</p>
+        <div className={s.textContainer}>
+          <p className={s.text}>
+            <PiSmileyMeltingLight />
+            Sorry! This car is unavailable. Please choose another option.
+          </p>{" "}
+        </div>
       )}
 
       {filteredCars.length > visibleCount && (
-        <LoadMore
-          handleLoadMore={handleLoadMore}
-          isVisible={isLoadMoreVisible}
-        />
+        <div className={s.loadMoreContainer}>
+          <LoadMore
+            handleLoadMore={handleLoadMore}
+            isVisible={isLoadMoreVisible}
+          />
+        </div>
       )}
-    </>
+    </div>
   );
 };
 
