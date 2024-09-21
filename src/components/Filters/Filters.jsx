@@ -24,8 +24,9 @@ const Filters = ({
 
   const handleSubmit = () => {
     applyFilters(minMileage, maxMileage);
-    setSelectedMakes("");
-    setSelectedPrice("");
+
+    setSelectedMakes(null);
+    setSelectedPrice(null);
     setMinMileage("");
     setMaxMileage("");
   };
@@ -46,8 +47,11 @@ const Filters = ({
         <div className={s.makes}>
           <h2 className={s.title}>Car brand</h2>
           <Select
-            value={makeOptions.find((option) => option.value === selectedMakes)}
-            onChange={(option) => setSelectedMakes(option.value)}
+            value={
+              makeOptions.find((option) => option.value === selectedMakes) ||
+              null
+            }
+            onChange={(option) => setSelectedMakes(option ? option.value : "")}
             options={makeOptions}
             styles={customStyles}
             placeholder="Enter the text"
@@ -57,10 +61,11 @@ const Filters = ({
         <div className={s.price}>
           <h2 className={s.title}>Price/1 hour</h2>
           <Select
-            value={priceOptions.find(
-              (option) => option.value === selectedPrice
-            )}
-            onChange={(option) => setSelectedPrice(option.value)}
+            value={
+              priceOptions.find((option) => option.value === selectedPrice) ||
+              null
+            }
+            onChange={(option) => setSelectedPrice(option ? option.value : "")}
             options={priceOptions}
             styles={customStyles}
             placeholder="to $"
@@ -91,7 +96,6 @@ const Filters = ({
         </div>
       </div>
       <div className={s.btnWrapper}>
-        {" "}
         <button className={s.btn} type="button" onClick={handleSubmit}>
           Search
         </button>
