@@ -2,11 +2,13 @@
 <img width="1303" alt="Bildschirmfoto 2024-09-21 um 16 18 01" src="https://github.com/user-attachments/assets/76e7bc3a-d5a7-4e09-83ce-83376ad13f53">
 
 Rent-Car
+
 Welcome to Rent-Car-Website, a user-friendly and accessible car rental service that aims to provide a seamless and engaging experience for our customers. With its simple and attractive design, the website ensures a smooth journey from browsing to booking your desired car.
 
 Features
 Home Page:
 The Home page is designed to captivate clients right from the start. It presents an overview of the key advantages of our service, such as affordability, convenience, and a wide selection of cars. This page helps users understand why Rent-Car-Website is the best option for car rentals.
+
 
 Catalog Page:
 The Catalog page offers a convenient way to browse and filter cars based on:
@@ -29,7 +31,7 @@ Getting Started
 To explore our catalog and enjoy our simple car rental process, visit the Rent-Car-Website. Browse through the available cars, filter based on your preferences, and make a quick booking!
 
 This website provides an intuitive and convenient solution for renting cars, with features designed to enhance the user experience and simplify the process.
-![image](https://github.com/user-attachments/assets/5bf3d832-91e4-4028-9d72-1a6ae3d44ffe)
+
 
 
 # React + Vite
