@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import Select from "react-select";
+
 import { makes } from "../../helpers/makes";
 import { prices } from "../../helpers/prices";
-import s from "./Filters.module.css";
 import { customStyles } from "../../helpers/selectStyles";
+
+import s from "./Filters.module.css";
 
 const Filters = ({
   selectedMakes,

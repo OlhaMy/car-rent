@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import s from "./Favorites.module.css";
+
 import CarItem from "../CarItem/CarItem";
 import Modal from "../Modal/Modal";
 import useLocalStorage from "../../helpers/localStorage";
+
+import s from "./Favorites.module.css";
 
 const Favorites = () => {
   const [favorites, setFavorites] = useLocalStorage("favorites", []);

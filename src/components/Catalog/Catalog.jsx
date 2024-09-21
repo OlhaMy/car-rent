@@ -2,23 +2,30 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCarsThunk } from "../../redux/operations";
 import { selectCars } from "../../redux/selectors";
+import { PiSmileyMeltingLight } from "react-icons/pi";
+
 import Filters from "../Filters/Filters";
 import CarList from "../CarList/CarList";
 import LoadMore from "../LoadMore/LoadMore";
+import Loader from "../Loader/Loader";
+
 import s from "./Catalog.module.css";
-import { PiSmileyMeltingLight } from "react-icons/pi";
 
 const Catalog = () => {
   const dispatch = useDispatch();
   const cars = useSelector(selectCars);
 
+  const [loading, setLoading] = useState(true);
   const [visibleCount, setVisibleCount] = useState(12);
   const [filteredCars, setFilteredCars] = useState([]);
   const [selectedMakes, setSelectedMakes] = useState("");
   const [selectedPrice, setSelectedPrice] = useState("");
 
   useEffect(() => {
-    dispatch(fetchCarsThunk());
+    setLoading(true);
+    dispatch(fetchCarsThunk()).finally(() => {
+      setLoading(false);
+    });
   }, [dispatch]);
 
   useEffect(() => {
@@ -53,32 +60,38 @@ const Catalog = () => {
 
   return (
     <div className={s.wrapper}>
-      <Filters
-        selectedMakes={selectedMakes}
-        setSelectedMakes={setSelectedMakes}
-        selectedPrice={selectedPrice}
-        setSelectedPrice={setSelectedPrice}
-        applyFilters={applyFilters}
-      />
-
-      {visibleCars.length > 0 ? (
-        <CarList cars={visibleCars} />
+      {loading ? (
+        <Loader />
       ) : (
-        <div className={s.textContainer}>
-          <p className={s.text}>
-            <PiSmileyMeltingLight />
-            Sorry! This car is unavailable. Please choose another option.
-          </p>{" "}
-        </div>
-      )}
-
-      {filteredCars.length > visibleCount && (
-        <div className={s.loadMoreContainer}>
-          <LoadMore
-            handleLoadMore={handleLoadMore}
-            isVisible={isLoadMoreVisible}
+        <>
+          <Filters
+            selectedMakes={selectedMakes}
+            setSelectedMakes={setSelectedMakes}
+            selectedPrice={selectedPrice}
+            setSelectedPrice={setSelectedPrice}
+            applyFilters={applyFilters}
           />
-        </div>
+
+          {visibleCars.length > 0 ? (
+            <CarList cars={visibleCars} />
+          ) : (
+            <div className={s.textContainer}>
+              <p className={s.text}>
+                <PiSmileyMeltingLight />
+                Sorry! This car is unavailable. Please choose another option.
+              </p>
+            </div>
+          )}
+
+          {filteredCars.length > visibleCount && (
+            <div className={s.loadMoreContainer}>
+              <LoadMore
+                handleLoadMore={handleLoadMore}
+                isVisible={isLoadMoreVisible}
+              />
+            </div>
+          )}
+        </>
       )}
     </div>
   );

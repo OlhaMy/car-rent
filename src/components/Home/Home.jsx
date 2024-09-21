@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+
 import s from "./Home.module.css";
 
 const Home = () => {
@@ -14,9 +15,9 @@ const Home = () => {
             newDivs[index] = true;
             return newDivs;
           });
-        }, index * 500); // Інтервал 0,5 секунди для кожного блоку
+        }, index * 1000);
       });
-    }, 2000); // Затримка в 2 секунди перед стартом анімації
+    }, 1500);
 
     return () => clearTimeout(timer);
   }, []);
@@ -26,14 +27,15 @@ const Home = () => {
       <div className={s.highway}></div>
       <div className={s.city}></div>
       <div className={s.welcome}>
-        <h1>Welcome to our rental car service!</h1>
+        <h1>
+          <span>Welcome to our </span> &nbsp;<span>rental car service!</span>
+        </h1>
         <Link className={s.check} to="/catalog">
           Check out our garage
         </Link>
       </div>
 
       <div className={s.infoBoxContainer}>
-        {/* Блоки зліва */}
         <div
           className={`${s.infoBox} ${s.left} ${visibleDivs[0] ? s.show : ""}`}
         >
@@ -45,7 +47,6 @@ const Home = () => {
           <p>Perfect car for any occasion.</p>
         </div>
 
-        {/* Блоки справа */}
         <div
           className={`${s.infoBox} ${s.right} ${visibleDivs[2] ? s.show : ""}`}
         >

@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+
 import s from "./Modal.module.css";
 
 const Modal = ({ car, isOpen, onClose }) => {
