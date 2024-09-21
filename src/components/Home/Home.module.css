@@ -121,7 +121,7 @@
 
 .highway {
   height: 200px;
-  width: 900%;
+  width: 1200%;
   display: block;
   background-image: url("/Car_Animation_Img/road.jpg");
   position: absolute;
@@ -242,7 +242,7 @@
   }
 
   .highway {
-    width: 1000%;
+    width: 2500%;
   }
 
   @keyframes highway {
