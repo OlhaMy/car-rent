@@ -1,7 +1,7 @@
 .header {
   background-color: var(--header);
   color: var(--white);
-  padding: 16px 115px;
+  padding: 26px 115px;
   -webkit-box-shadow: 0px 10px 13px -7px #000000,
     -33px -8px 0px -30px rgba(0, 0, 0, 0.02);
   box-shadow: 0px 10px 13px -7px #000000,

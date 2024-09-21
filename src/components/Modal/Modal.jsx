@@ -49,23 +49,36 @@ const Modal = ({ car, isOpen, onClose }) => {
           <li className={s.description}>{car.description}</li>
 
           <li className={s.accessories}>
-            <p>Accessories and functionalities: </p>
+            <p className={s.conditionsTitle}>
+              Accessories and functionalities:{" "}
+            </p>
             {car.accessories.join(" | ")}
             {car.functionalities.join(" | ")}
           </li>
 
           <li className={s.conditions}>
-            <p>Rental Conditions: </p>
-            <div className={s.conditionItem}>
-              Minimum age: {car.rentalConditions.age}
+            <div className={s.conditionsTitle}>
+              <p>Rental Conditions: </p>
             </div>
-            <div className={s.conditionItem}>Valid driver's license</div>
-            <div className={s.conditionItem}>Security deposit required</div>
-            <div className={`${s.conditionItem} ${s.highlight}`}>
-              Mileage: {car.mileage}
-            </div>
-            <div className={`${s.conditionItem} ${s.highlight}`}>
-              Price: {car.rentalPrice}
+
+            <div className={s.conditionsText}>
+              <p className={s.conditionItem}>
+                Minimum age:
+                <span className={s.spanTitle}>
+                  {car.rentalConditions.split("\n")[0].split(" ")[2]}
+                </span>
+              </p>
+              <p className={s.conditionItem}>Valid driver's license</p>
+              <p className={s.conditionItem}>Security deposit required</p>
+              <p className={s.conditionItem}>
+                Mileage:
+                <span className={s.spanTitle}>
+                  {car.mileage.toLocaleString("en-US")}
+                </span>
+              </p>
+              <p className={s.conditionItem}>
+                Price: <span className={s.spanTitle}>{car.rentalPrice}</span>
+              </p>
             </div>
           </li>
 

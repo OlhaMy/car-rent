@@ -1,14 +1,15 @@
 .list {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: 29px;
   justify-content: center;
-  padding: 0 115px;
-  margin-top: 115px;
+  padding: 100px 35px;
+  margin: 0;
 }
+
 .empty {
-  width: 100%; /* Займає 50% ширини екрану */
-  height: 100vh; /* Займає 50% висоти екрану */
+  width: 100%;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -17,26 +18,42 @@
   background-image: url("../Images/Objekt.png");
   background-position: center;
   background-repeat: no-repeat;
-  background-size: contain; /* Зображення масштабуватиметься, зберігаючи пропорції */
-  margin: auto; /* Центрування контейнера по горизонталі */
+  background-size: contain;
+  margin: auto;
 }
 
 .empty button {
   position: absolute;
-  top: 60%;
+  top: 55%;
   left: 30%;
 
   transform: translate(-50%, -50%);
-  padding: 10px 20px;
-  font-size: 16px;
+  padding: 10px 10px;
+  font-size: 14px;
   background-color: #007bff;
   color: white;
   border: none;
   border-radius: 5px;
-  cursor: pointer;
+
   transition: background-color 0.3s ease;
 }
 
 .empty button:hover {
   background-color: #0056b3;
+}
+
+@media screen and (min-width: 768px) {
+  .list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 100px 115px;
+  }
+  .empty button {
+    top: 60%;
+    left: 30%;
+
+    padding: 10px 20px;
+    font-size: 16px;
+  }
 }

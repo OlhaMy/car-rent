@@ -1,29 +1,14 @@
 .wrapper {
   display: flex;
   justify-content: center;
+  flex-direction: column;
   gap: 18px;
   padding: 100px 35px 35px 35px;
-  align-items: flex-end;
-  flex-wrap: wrap;
+  align-items: center;
 }
-
-.makes,
-.price,
-.mileageFilter {
+.laptopWrapper {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-.mileageFilter {
-  width: 320px;
-}
-
-.picker {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 10px;
+  gap: 18px;
 }
 
 .title {
@@ -32,83 +17,42 @@
   line-height: 18px;
   text-align: left;
   margin-bottom: 8px;
-}
-
-.select,
-.datePickerButton,
-input {
-  padding: 14px 24px;
-
-  border-radius: 12px;
-  border: 1px solid #ccc;
-  background-color: #f7f7fb;
-  border: none;
-  color: #121417;
-  appearance: none;
-  outline: none;
-  height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-
-  font-size: 18px;
   font-family: Manrope;
-  font-weight: 500;
-  line-height: 20px;
-}
-.select {
-  position: relative;
-}
-
-.select::after {
-  content: "▼";
-  position: absolute;
-  right: 10px;
-  pointer-events: none;
-  color: rgba(18, 20, 23, 0.2);
 }
 
 .mileageInputs {
   display: flex;
+  align-items: center;
 }
 
-input {
-  padding: 12px 16px;
-  width: 100%;
+.mileageInputs input {
+  padding: 14px 4px;
+  background: #f7f7fb;
+  border: none;
+  width: 140px;
+  height: 48px;
+  box-sizing: border-box;
+}
+.mileageInputs input:first-of-type {
+  border-right: 1px solid rgba(138, 138, 137, 0.2);
+}
 
+.mileageInputs input:last-of-type {
+  border-right: none;
+}
+
+input::placeholder {
+  color: #121417;
+  font-family: Manrope;
   font-size: 18px;
-  font-weight: 500;
-  line-height: 20px;
 }
+
 .inputFirst {
   border-radius: 14px 0px 0px 14px;
 }
+
 .inputSecond {
   border-radius: 0px 14px 14px 0px;
-}
-input::placeholder {
-  color: #121417;
-}
-.line {
-  width: 3px;
-  height: 45px;
-  background-color: rgba(138, 138, 137, 0.2);
-}
-option {
-  width: 100%;
-  padding: 10px;
-
-  background-color: #fff;
-  color: rgba(18, 20, 23, 0.2);
-}
-option:checked {
-  color: #121417;
-}
-.input:focus,
-.datePickerButton:focus,
-.select:focus {
-  border-color: var(--button-color);
 }
 
 .btn {
@@ -131,20 +75,12 @@ option:checked {
   background-color: var(--button-active);
 }
 
-@media (max-width: 768px) {
+@media screen and (min-width: 1280px) {
   .wrapper {
-    flex-direction: column;
-    align-items: center;
+    flex-direction: row;
+    align-items: flex-end;
   }
-
-  .makes,
-  .price,
-  .mileageFilter {
-    width: 100%;
-    max-width: 300px;
-  }
-
-  .btn {
-    width: 100%;
+  .mileageInputs input {
+    padding: 14px 24px;
   }
 }

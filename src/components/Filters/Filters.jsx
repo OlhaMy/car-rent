@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import Select from "react-select";
 import { makes } from "../../helpers/makes";
 import { prices } from "../../helpers/prices";
 import s from "./Filters.module.css";
+import { customStyles } from "../../helpers/selectStyles";
 
 const Filters = ({
   selectedMakes,
@@ -26,46 +28,46 @@ const Filters = ({
     setMaxMileage("");
   };
 
+  const makeOptions = makes.map((make) => ({
+    label: make,
+    value: make,
+  }));
+
+  const priceOptions = prices.map((price) => ({
+    label: `$${price}`,
+    value: price,
+  }));
+
   return (
     <div className={s.wrapper}>
-      <div className={s.makes}>
-        <h2 className={s.title}>Car brand</h2>
-        <label>
-          <select
-            value={selectedMakes}
-            onChange={(e) => setSelectedMakes(e.target.value)}
-            className={s.select}
-          >
-            <option value="">Enter the text</option>
-            {makes.map((make, index) => (
-              <option key={`${make}-${index}`} value={make}>
-                {make}
-              </option>
-            ))}
-          </select>
-        </label>
-      </div>
+      <div className={s.laptopWrapper}>
+        <div className={s.makes}>
+          <h2 className={s.title}>Car brand</h2>
+          <Select
+            value={makeOptions.find((option) => option.value === selectedMakes)}
+            onChange={(option) => setSelectedMakes(option.value)}
+            options={makeOptions}
+            styles={customStyles}
+            placeholder="Enter the text"
+          />
+        </div>
 
-      <div className={s.price}>
-        <h2 className={s.title}>Price/1 hour</h2>
-        <label>
-          <select
-            value={selectedPrice}
-            onChange={(e) => setSelectedPrice(e.target.value)}
-            className={s.select}
-          >
-            <option value="">to $</option>
-            {prices.map((price) => (
-              <option key={price} value={price}>
-                {price}
-              </option>
-            ))}
-          </select>
-        </label>
+        <div className={s.price}>
+          <h2 className={s.title}>Price/1 hour</h2>
+          <Select
+            value={priceOptions.find(
+              (option) => option.value === selectedPrice
+            )}
+            onChange={(option) => setSelectedPrice(option.value)}
+            options={priceOptions}
+            styles={customStyles}
+            placeholder="to $"
+          />
+        </div>
       </div>
 
       <div className={s.mileageFilter}>
-        <h2 className={s.title}>Сar mileage / km</h2>
+        <h2 className={s.title}>Car mileage / km</h2>
         <div className={s.mileageInputs}>
           <input
             type="number"
@@ -81,15 +83,17 @@ const Filters = ({
             placeholder="To"
             value={maxMileage}
             onChange={handleMileageChange(setMaxMileage)}
-            className={s.input}
+            className={s.inputSecond}
             min="0"
           />
         </div>
       </div>
-
-      <button className={s.btn} type="button" onClick={handleSubmit}>
-        Search
-      </button>
+      <div className={s.btnWrapper}>
+        {" "}
+        <button className={s.btn} type="button" onClick={handleSubmit}>
+          Search
+        </button>
+      </div>
     </div>
   );
 };

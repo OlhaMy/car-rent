@@ -68,6 +68,7 @@
 
 .description {
   margin-bottom: 24px;
+  font-family: Manrope;
   color: #121417;
   line-height: 1.5;
   text-align: left;
@@ -98,43 +99,38 @@
 
 .conditions {
   display: flex;
-
+  flex-direction: column;
   justify-content: flex-start;
   gap: 10px;
   flex-wrap: wrap;
   margin-bottom: 24px;
+
+  display: flex;
+
+  margin-bottom: 30px;
 }
-.conditions p {
+.conditionsTitle {
   color: #121417;
+  font-family: Manrope;
   font-size: 14px;
   font-weight: 500;
   line-height: 20px;
-  margin-bottom: 8px;
 }
 
 .conditionItem {
-  display: flex;
+  display: inline-flex;
+  font-family: Manrope;
   padding: 7px 14px;
-  justify-content: center;
-  align-items: center;
   gap: 10px;
-
   border-radius: 35px;
   background: #f9f9f9;
+  margin: 0;
 
   color: #363535;
+  font-family: Manrope;
   font-size: 12px;
   font-weight: 400;
   line-height: 18px;
-}
-
-.conditionItem p {
-  margin: 0;
-}
-
-.conditionItem.highlight {
-  font-weight: bold;
-  color: #121417;
 }
 
 .modalClose {
@@ -150,16 +146,55 @@
 .rentalCarButton {
   display: inline-block;
 
-  padding: 10px 20px;
+  padding: 10px 50px;
   background-color: var(--button-color);
   color: white;
   text-decoration: none;
-  border-radius: 5px;
+  border-radius: 12px;
   text-align: center;
-  font-weight: bold;
+
+  font-family: Manrope;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 20px;
+
   transition: background-color 0.3s ease;
 }
 
 .rentalCarButton:hover {
   background-color: var(--button-active);
+}
+
+@media screen and ((max-width: 767px)) {
+  .title {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+  }
+  .titleDescription {
+    font-size: 12px;
+    margin-bottom: 10px;
+  }
+  .description {
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 18px;
+  }
+  .conditionsTitle {
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 18px;
+  }
+
+  .rentalCarButton {
+    padding: 10px 30px;
+
+    border-radius: 12px;
+
+    font-size: 12px;
+
+    font-weight: 500;
+    line-height: 18px;
+  }
 }

@@ -6,6 +6,7 @@ const CatalogPage = lazy(() => import("../../pages/CatalogPage/CatalogPage"));
 const FavoritesPage = lazy(() =>
   import("../../pages/FavoritesPage/FavoritesPage")
 );
+import Loader from "../Loader/Loader";
 import { Navigation } from "../Navigation/Navigation";
 import "./App.css";
 
@@ -13,7 +14,13 @@ function App() {
   return (
     <>
       <Navigation />
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense
+        fallback={
+          <div>
+            <Loader />
+          </div>
+        }
+      >
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/catalog" element={<CatalogPage />} />
