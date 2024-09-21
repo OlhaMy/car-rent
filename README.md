@@ -37,7 +37,8 @@ To explore our catalog and enjoy our simple car rental process, visit the Rent-C
 
 This website provides an intuitive and convenient solution for renting cars, with features designed to enhance the user experience and simplify the process.
 
-
+https://friendly-fairy-1e24e0.netlify.app/
+https://github.com/OlhaMy/car-rent.git
 
 # React + Vite
 
