@@ -121,7 +121,7 @@
 
 .highway {
   height: 200px;
-  width: 500%;
+  width: 900%;
   display: block;
   background-image: url("/Car_Animation_Img/road.jpg");
   position: absolute;
@@ -130,12 +130,12 @@
   right: 0;
   z-index: 1;
   background-repeat: repeat-x;
-  animation: highway 5s linear infinite;
+  animation: highway 3s linear infinite;
 }
 
 @keyframes highway {
   100% {
-    transform: translateX(-3400px);
+    transform: translateX(-4000px);
   }
 }
 
@@ -239,6 +239,16 @@
     box-shadow: 0px 0px 0px 8px #000000, 0px 0px 0px 16px #4b4c4b,
       0px 0px 0px 24px #828482, 0px 0px 0px 31px #b2b5b2,
       0px 0px 0px 39px #daddda, 5px 5px 15px 5px rgba(0, 0, 0, 0);
+  }
+
+  .highway {
+    width: 1000%;
+  }
+
+  @keyframes highway {
+    100% {
+      transform: translateX(-8000px);
+    }
   }
 }
 
